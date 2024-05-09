@@ -18,17 +18,21 @@ class Directions:
     LEFT = (-1,0)
     UP = (0,-1)
     DOWN = (0,1)
-    RIGHTUP = RIGHT + UP
-    RIGHTDOWN = RIGHT + DOWN
-    LEFTUP = LEFT + UP
-    LEFTDOWN = LEFT + DOWN
+    RIGHTUP = (1,-1)
+    RIGHTDOWN = (1,1)
+    LEFTUP = (-1,-1)
+    LEFTDOWN = (-1,1)
 
     @staticmethod
     def getNextDirection(direction):
         nextdirection  = {Directions.RIGHT:Directions.DOWN,
                           Directions.DOWN:Directions.LEFT,
                           Directions.LEFT:Directions.UP,
-                          Directions.UP:Directions.RIGHT
+                          Directions.UP:Directions.RIGHT,
+                          Directions.RIGHTUP:Directions.UP,
+                          Directions.RIGHTDOWN:Directions.RIGHT,
+                          Directions.LEFTUP:Directions.LEFT,
+                          Directions.LEFTDOWN:Directions.DOWN,
                          }
         return nextdirection[direction]
 
@@ -52,9 +56,9 @@ class Directions:
             nextBlock = currentBlock + currentDirection
             if nextBlock:
                 if isinstance(nextBlock,DummyBlock):
-                    cornerBlockDirection = Directions.getNextDirectionCornerBlock()
+                    cornerBlockDirection = Directions.getNextCornerBlockDirection(currentDirection)
                     currentBlock.next = currentBlock + cornerBlockDirection
-                    currentDirection = Directions.getNextDirection(currentDirection)
+                    currentDirection = Directions.getNextDirection(cornerBlockDirection)
                 else:
                     currentBlock.next = currentBlock + currentDirection
             else:
@@ -68,6 +72,9 @@ class Directions:
                 while not isinstance(newCurrentBlock,HomeBlock):
                     newCurrentBlock.next = newCurrentBlock + homeDirection
                     newCurrentBlock = newCurrentBlock.next
+
+            currentBlock = currentBlock.next
+            #print(currentBlock, currentBlock.x, currentBlock.y)
      
 class Dimensions:
     BLOCKSINROW = 15
@@ -121,7 +128,7 @@ class Dimensions:
     DUMMY_BLOCKS[2] = (YELLOW_PLAYBASE.X - B, YELLOW_PLAYBASE.Y + 2*B)
     DUMMY_BLOCKS[3] = (BLUE_PLAYBASE.X, BLUE_PLAYBASE.Y - B)
 
-    PLAYERS_INITIAL_POS_BASE_DEMENSIONS = [(RED,1.5*B,3*B),(GREEN,10.5*B,3*B),(YELLOW,10.5*B,12*B),(BLUE,1.5*B,12*B)]
+    PLAYERS_INITIAL_RECT_POS = [(RED,1.5*B,3.5*B),(GREEN,10.5*B,3.5*B),(YELLOW,10.5*B,12.5*B),(BLUE,1.5*B,12.5*B)]
     PLAYERS_INITIAL_POS_SPACINGS = 2*B
 
     DICE_POSITIONS = deque([(0,0),(SCREENWIDTH-2*B,0),(SCREENWIDTH-2*B,SCREENHEIGHT-2*B),(0,SCREENHEIGHT-2*B)])

@@ -22,27 +22,26 @@ class Game:
         pygame.display.set_caption(CAPTION)
 
     def initPlayers(self):
-        for entry in Dimensions.PLAYERS_INITIAL_POS_BASE_DEMENSIONS:
-            type,base_x,base_y = entry[0],entry[1],entry[2]
+        for entry in Dimensions.PLAYERS_INITIAL_RECT_POS:
+            type,rect_x,rect_y = entry[0],entry[1],entry[2]
             playerImage = f"Images/{type}.png"
             P = Dimensions.PLAYERS_INITIAL_POS_SPACINGS
-
-            rectPlayer = self.resizeImg(playerImage,Dimensions.BLOCKSIZE,Dimensions.BLOCKSIZE)
+            
             resizedPlayer = self.resizeImg(playerImage,Dimensions.PLAYERWIDTH,Dimensions.PLAYERHEIGHT)
-
-            Player(type,base_x,base_y,resizedPlayer,rectPlayer)
-            Player(type,base_x + P,base_y,resizedPlayer,rectPlayer)
-            Player(type,base_x,base_y + P,resizedPlayer,rectPlayer)
-            Player(type,base_x + P,base_y + P,resizedPlayer,rectPlayer)
+            
+            Player(type,rect_x,rect_y,resizedPlayer)
+            Player(type,rect_x + P,rect_y,resizedPlayer)
+            Player(type,rect_x,rect_y + P,resizedPlayer)
+            Player(type,rect_x + P,rect_y + P,resizedPlayer)
 
     def initDice(self):
         for i in range(1,7):
             resizedDice = self.resizeImg(f"Images/{i}.png",Dimensions.DICEHEIGHT,Dimensions.DICEWIDTH)
             Dice.imgList.append(resizedDice)
         Dice.img = Dice.imgList[6]
-        Dice.img_rect = Dice.img.get_rect()
+        Dice.imgRect = Dice.img.get_rect()
         initial_pos = Dimensions.DICE_POSITIONS[0]
-        Dice.img_rect.topleft = (initial_pos[0],initial_pos[1])
+        Dice.imgRect.topleft = (initial_pos[0],initial_pos[1])
 
     #Resizing image according to the screen dimentions
     def resizeImg(self,path,new_width,new_height):

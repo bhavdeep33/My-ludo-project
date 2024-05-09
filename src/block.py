@@ -10,15 +10,6 @@ class Block:
         self.next = None
         Block.Blocks.append(self)
 
-    def getSafeBlocks():
-        pass
-
-    def getHomeEntryBlocks():
-        pass
-    
-    def getHomeBlocks():
-        pass
-
     def addPlayers():
         pass
 

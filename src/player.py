@@ -1,38 +1,37 @@
 from defines import Dimensions
 from dice import Dice
-from block import HomeBlock
+from block import HomeBlock,StartingPointBlock
+import pygame
+import time
 
 class Player:
     Players = []
 
-    def __init__(self,type,initial_x,initial_y,img,rectImg):
+    def __init__(self,type,rect_x,rect_y,img):
         self.type = type
         self.currentBlock = None
         self.isInsideHome = False
         # self.isOutsideBase = True
-        # self.isMovable = False
-        self.initial_x = initial_x
-        self.initial_y = initial_y
-        # self.x = initial_x
-        # self.y = initial_y
-        # self.width = None
-        # self.Height = None
-        self.img = rectImg
-        self.img_rect = self.img.get_rect()
-        self.img_rect.topleft = (initial_x, initial_y)
+        self.initialImgRect = pygame.Rect(rect_x,rect_y,Dimensions.BLOCKSIZE,Dimensions.BLOCKSIZE)
+        self.imgRect = self.initialImgRect
         self.img = img
         Player.Players.append(self)
+
+    def blitPlayer(self,SCREEN):
+        imgX = self.imgRect.x
+        imgY = self.imgRect.y - Dimensions.B/2
+        SCREEN.blit(self.img,(imgX,imgY))
 
     @staticmethod
     def blitPlayers(SCREEN):
         for player in Player.Players:
-            SCREEN.blit(player.img,player.img_rect)
+            player.blitPlayer(SCREEN)
 
     @staticmethod
     def playerClicked(type,mouse_pos):
         for player in Player.Players:
-            if(player.type==type and player.img_rect.collidepoint(mouse_pos)):
-                    print("Clicked on image!")
+            if(player.type==type and player.imgRect.collidepoint(mouse_pos)):
+                    #print("Clicked on image!")
                     return player
         return None
 
@@ -43,16 +42,18 @@ class Player:
             else:
                 return False
         else:
+            #print("Player is not outside")
             count = Dice.currentCount
             currentBlock = self.currentBlock
-            while count!=0 and isinstance(currentBlock,HomeBlock):
+            while count!=0 and not isinstance(currentBlock,HomeBlock):
+                #print(currentBlock)
                 currentBlock = currentBlock.nextBlock(currentBlock.type)
                 count -= 1
             return True if count==0 else False
         
     def isMovablePlayersAvailable():
         for player in Player.Players:
-            if player.isMovable():
+            if player.type==Dice.currentTurn and player.isMovable():
                 return True
         return False
 
@@ -68,12 +69,20 @@ class Player:
     def getKilled():
         Dice.availableTurns += 1
 
-    def movePlayer(self,count):
-        from block import StartingPointBlock
-        if self.currentBlock is None and count==6:
+    def movePlayer(self,currentCount,game):
+        if self.currentBlock is None:
             targetBlock = StartingPointBlock.getStartingPointBlockFor(self.type)
-            self.img_rect.topleft = (targetBlock.x,targetBlock.y)
+            self.imgRect.topleft = (targetBlock.x,targetBlock.y)
             self.currentBlock = targetBlock
-            targetBlock.havePlayers.append(self)
-        #move players by count
+        else:
+            count = currentCount
+            while count!=0:
+                nextBlock = self.currentBlock.nextBlock(self.type)
+                self.imgRect.topleft = (nextBlock.x,nextBlock.y)
+                self.currentBlock = nextBlock
+                game.blitObjects()
+                time.sleep(0.1)
+                count -= 1
+        self.currentBlock.havePlayers.append(self)
         Dice.isRolled = False
+        Dice.currentCount = 0

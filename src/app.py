@@ -18,26 +18,29 @@ if __name__ == "__main__":
                 if(Dice.isRolled):
                     playerClicked = Player.playerClicked(Dice.currentTurn,mouse_pos)
                     if(playerClicked and playerClicked.isMovable()):
-                        print("Player is movable")
-                        playerClicked.movePlayer(Dice.currentCount)
+                        #print("Player is movable")
+                        playerClicked.movePlayer(Dice.currentCount,game)
 
                         currentBlock = playerClicked.currentBlock
                         if currentBlock.havePlayers and not currentBlock.isSafe():
                             currentBlock.havePlayers[0].getKilled()
                         else:
-                            print("Player is safe")
+                            pass
+                            #print("Player is safe")
                         
                         Dice.setToNextTurn()
                 else:
                     if(Dice.isDiceClicked(mouse_pos)):
-                       Dice.rollDice(game.SCREEN)
-                    #    Dice.currentCount = 6
+                        Dice.rollDice(game.SCREEN)
+                        if Dice.sixCount<3:
+                           Dice.availableTurns+=1
+                        else:
+                            Dice.setToNextTurn()
         
         if(Dice.isRolled):
             if not Player.isMovablePlayersAvailable():
-                print("No movable players are available")
+                #print("No movable players are available")
                 Dice.setToNextTurn()
-            
         game.blitObjects()
         
     pygame.quit()
