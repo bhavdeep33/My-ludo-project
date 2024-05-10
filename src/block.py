@@ -6,7 +6,7 @@ class Block:
         self.type = type
         self.x = x
         self.y = y
-        self.havePlayers = []
+        self.players = []
         self.next = None
         Block.Blocks.append(self)
 
@@ -51,7 +51,7 @@ class Block:
             return self.next
     
     def isSafe(self):
-        if(isinstance(self,SafeBlock) or len(self.havePlayers)>2):
+        if(isinstance(self,SafeBlock) or len(self.players)>3):
             return True
         else:
             return False

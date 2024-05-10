@@ -18,29 +18,30 @@ if __name__ == "__main__":
                 if(Dice.isRolled):
                     playerClicked = Player.playerClicked(Dice.currentTurn,mouse_pos)
                     if(playerClicked and playerClicked.isMovable()):
-                        #print("Player is movable")
                         playerClicked.movePlayer(Dice.currentCount,game)
 
-                        currentBlock = playerClicked.currentBlock
-                        if currentBlock.havePlayers and not currentBlock.isSafe():
-                            currentBlock.havePlayers[0].getKilled()
-                        else:
-                            pass
-                            #print("Player is safe")
-                        
-                        Dice.setToNextTurn()
+                        if playerClicked.canKill():
+                            playerClicked.currentBlock.players[0].getKilled(game)
+
                 else:
                     if(Dice.isDiceClicked(mouse_pos)):
                         Dice.rollDice(game.SCREEN)
-                        if Dice.sixCount<3:
-                           Dice.availableTurns+=1
-                        else:
+                        if Dice.gotThreeSixInRow():
                             Dice.setToNextTurn()
-        
-        if(Dice.isRolled):
-            if not Player.isMovablePlayersAvailable():
-                #print("No movable players are available")
-                Dice.setToNextTurn()
+                        else:    
+                            movablePlayers = Player.movablePlayersAvailable()
+                            if not movablePlayers:
+                                Dice.setToNextTurn()
+
+                            elif len(movablePlayers)==1:
+                                player = movablePlayers[0]
+                                player.movePlayer(Dice.currentCount,game)
+                                if player.canKill():
+                                    player.currentBlock.players[0].getKilled(game)
+                   
+        if Dice.availableTurns==0:
+            Dice.setToNextTurn()
+                
         game.blitObjects()
         
     pygame.quit()

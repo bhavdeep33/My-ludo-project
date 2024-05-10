@@ -3,6 +3,9 @@ import random
 import pygame
 import time
 
+#from collections import deque #-------
+#seq  = deque([6,6,6,2]) #----------
+
 class Dice:
     isRolled = False
     currentCount = 0
@@ -20,8 +23,14 @@ class Dice:
         Dimensions.DICE_POSITIONS.rotate(-1)
         return  Dimensions.DICE_POSITIONS[0]
     
-    def isMoreTurnsAvailable():
-        pass
+    def gotThreeSixInRow():
+        Dice.sixCount +=1 if Dice.currentCount==6 else 0
+        print("Dice sixcount: ",Dice.sixCount)
+        if Dice.sixCount<3:
+            return False
+        else:
+            Dice.availableTurns = 0
+            return True
 
     def setToNextTurn():
         Dice.img = Dice.imgList[6]
@@ -30,6 +39,7 @@ class Dice:
         Dice.currentTurn = SEQUENCE[0]
         Dice.isRolled = False
         Dice.availableTurns = 1
+        Dice.sixCount = 0
 
     def isDiceClicked(mouse_pos):
         if Dice.imgRect.collidepoint(mouse_pos):
@@ -46,8 +56,13 @@ class Dice:
             pygame.display.update()
             time.sleep(0.01)
 
+        # seq.rotate(-1) #------------
+        # count = seq[0] #----------------
+        # Dice.img = Dice.imgList[count] #----------------
+        # Dice.blitDice(SCREEN) #----------------
+        # pygame.display.update() #----------------
+        
         Dice.currentCount = count
         Dice.isRolled = True
-        Dice.availableTurns -= 1
-
-        Dice.sixCount +=1 if Dice.currentCount==6 else 0
+        if Dice.currentCount==6:
+            Dice.availableTurns += 1

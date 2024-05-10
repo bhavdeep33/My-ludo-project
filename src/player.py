@@ -13,7 +13,7 @@ class Player:
         self.isInsideHome = False
         # self.isOutsideBase = True
         self.initialImgRect = pygame.Rect(rect_x,rect_y,Dimensions.BLOCKSIZE,Dimensions.BLOCKSIZE)
-        self.imgRect = self.initialImgRect
+        self.imgRect = self.initialImgRect.copy()
         self.img = img
         Player.Players.append(self)
 
@@ -51,11 +51,12 @@ class Player:
                 count -= 1
             return True if count==0 else False
         
-    def isMovablePlayersAvailable():
+    def movablePlayersAvailable():
+        movablePlayers = []
         for player in Player.Players:
             if player.type==Dice.currentTurn and player.isMovable():
-                return True
-        return False
+                movablePlayers.append(player)
+        return movablePlayers
 
     def getPlayers():
         pass
@@ -65,8 +66,18 @@ class Player:
 
     def setDefaultSize():
         pass
+    
+    def canKill(self):
+        playersAtBlock = self.currentBlock.players
+        if len(playersAtBlock)==2 and not self.currentBlock.isSafe() and (playersAtBlock[0].type!=self.type):
+            return True
+        return False
 
-    def getKilled():
+    def getKilled(self,game):
+        print(self,"is Getting killed")
+        self.currentBlock.players.remove(self)
+        self.currentBlock = None
+        self.imgRect = self.initialImgRect
         Dice.availableTurns += 1
 
     def movePlayer(self,currentCount,game):
@@ -75,6 +86,7 @@ class Player:
             self.imgRect.topleft = (targetBlock.x,targetBlock.y)
             self.currentBlock = targetBlock
         else:
+            self.currentBlock.players.remove(self)
             count = currentCount
             while count!=0:
                 nextBlock = self.currentBlock.nextBlock(self.type)
@@ -83,6 +95,7 @@ class Player:
                 game.blitObjects()
                 time.sleep(0.1)
                 count -= 1
-        self.currentBlock.havePlayers.append(self)
+        self.currentBlock.players.append(self)
         Dice.isRolled = False
         Dice.currentCount = 0
+        Dice.availableTurns -= 1
