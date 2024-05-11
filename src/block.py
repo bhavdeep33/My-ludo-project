@@ -1,27 +1,42 @@
 from defines import *
 
 class Block:
-    Blocks = []
+    BLOCKS = []
+
     def __init__(self,type,x,y):
-        self.type = type
-        self.x = x
-        self.y = y
+        self.__type = type
+        self.__x = x
+        self.__y = y
         self.players = []
-        self.next = None
-        Block.Blocks.append(self)
+        self.__next = None
+        Block.BLOCKS.append(self)
 
-    def addPlayers():
-        pass
-
-    def removePlayers():
-        pass
-    
     def __add__(self,direction):
         xOffset = direction[0]*Dimensions.BLOCKSIZE
         yOffset = direction[1]*Dimensions.BLOCKSIZE
         newBlock = Block.getBlockByDimensions(self.x+xOffset,self.y+yOffset)
         return newBlock
-
+    
+    @property
+    def type(self):
+        return self.__type
+    
+    @property
+    def x(self):
+        return self.__x
+    
+    @property
+    def y(self):
+        return self.__y
+    
+    @property
+    def next(self):
+        return self.__next
+    
+    @next.setter
+    def next(self,value):
+        self.__next = value
+    
     @staticmethod
     def createBlocks(x,y,type):
         if(x,y) in Dimensions.DUMMY_BLOCKS:
@@ -39,7 +54,7 @@ class Block:
 
     @staticmethod
     def getBlockByDimensions(x,y):
-        for block in Block.Blocks:
+        for block in Block.BLOCKS:
             if(block.x == x and block.y == y):
                 return block
         return None
@@ -55,6 +70,13 @@ class Block:
             return True
         else:
             return False
+    
+    def getPlayersByType(self,type):
+        players = []
+        for player in self.players:
+            if player.type == type:
+                players.append(player)
+        return players
 
 class SafeBlock(Block):
     def __init__(self, type, x, y):
@@ -66,6 +88,7 @@ class StartingPointBlock(SafeBlock):
         super().__init__(type, x, y)
         StartingPointBlock.StartingPointBlocks.append(self)
     
+    @staticmethod
     def getStartingPointBlockFor(type):
         for block in StartingPointBlock.StartingPointBlocks:
             if block.type == type:

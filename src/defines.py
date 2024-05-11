@@ -10,7 +10,7 @@ GREEN = "Green"
 YELLOW = "Yellow"
 DUMMY = "Dummy"
 CAPTION = config['caption']['caption']
-SEQUENCE  = deque([RED,GREEN,YELLOW,BLUE])
+sequence  = deque([RED,GREEN,YELLOW,BLUE])
 INITIAL_DICE_COUNT = 6
 
 class Directions:
@@ -74,7 +74,6 @@ class Directions:
                     newCurrentBlock = newCurrentBlock.next
 
             currentBlock = currentBlock.next
-            #print(currentBlock, currentBlock.x, currentBlock.y)
      
 class Dimensions:
     BLOCKSINROW = 15
@@ -87,6 +86,8 @@ class Dimensions:
     PLAYERHEIGHT = 1.5*BLOCKSIZE
     DICEHEIGHT = 2*BLOCKSIZE
     DICEWIDTH = 2*BLOCKSIZE
+    BANNERWIDTH = 11*BLOCKSIZE
+    BANNERHEIGHT = 2*BLOCKSIZE
 
     class Object:
         def __init__(self,x,y):
@@ -128,10 +129,11 @@ class Dimensions:
     DUMMY_BLOCKS[2] = (YELLOW_PLAYBASE.X - B, YELLOW_PLAYBASE.Y + 2*B)
     DUMMY_BLOCKS[3] = (BLUE_PLAYBASE.X, BLUE_PLAYBASE.Y - B)
 
-    PLAYERS_INITIAL_RECT_POS = [(RED,1.5*B,3.5*B),(GREEN,10.5*B,3.5*B),(YELLOW,10.5*B,12.5*B),(BLUE,1.5*B,12.5*B)]
+    PLAYERS_INITIAL_RECT_POS = [(RED,1.5*B,3.3*B),(GREEN,10.5*B,3.3*B),(YELLOW,10.5*B,12.3*B),(BLUE,1.5*B,12.3*B)]
     PLAYERS_INITIAL_POS_SPACINGS = 2*B
-
-    DICE_POSITIONS = deque([(0,0),(SCREENWIDTH-2*B,0),(SCREENWIDTH-2*B,SCREENHEIGHT-2*B),(0,SCREENHEIGHT-2*B)])
+    POP_PLAYERS_SPACING = 0.3*B
+    dicePositions = deque([(0,0),(SCREENWIDTH-2*B,0),(SCREENWIDTH-2*B,SCREENHEIGHT-2*B),(0,SCREENHEIGHT-2*B)])
+    BANNER_POS = [(2*B,0),(2*B,SCREENHEIGHT-2*B)]
 
     @staticmethod
     def defineBlockDimensions():
