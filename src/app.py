@@ -4,8 +4,10 @@ from dice import Dice
 import pygame
 from defines import *
 
-if __name__ == "__main__":
-    
+EXITGAME = False
+RESTARTGAME = True
+
+def main():
     game = Game()
 
     while not game.exitGame:
@@ -21,10 +23,16 @@ if __name__ == "__main__":
                         
                         playerClicked.movePlayer(Dice.currentCount,game)
 
-                        if playerClicked.reachedHome():
-                            if playerClicked.allPlayersReachedHome():
-                                Dice.setToNextTurn()
-                                Dice.removeFromSequence(player.type)
+                        if player.reachedHome():
+                            if player.allPlayersReachedHome():
+                                Dice.removeFromSequence(game,player.type)
+                                if game.isGameOver():
+                                    if game.wantToPlayAgain():
+                                        return RESTARTGAME
+                                    else:
+                                        return EXITGAME
+                                else:
+                                    Dice.setToNextTurn(game)
                             else:
                                 Dice.availableTurns += 1
 
@@ -34,11 +42,11 @@ if __name__ == "__main__":
                     if(Dice.isDiceClicked(mousePos)):
                         Dice.rollDice(game.SCREEN)
                         if Dice.gotThreeSixInRow():
-                            Dice.setToNextTurn()
+                            Dice.setToNextTurn(game)
                         else:
                             movablePlayers = Player.movablePlayersAvailable()
                             if not movablePlayers:
-                                Dice.setToNextTurn()
+                                Dice.setToNextTurn(game)
 
                             elif len(movablePlayers)==1 or Player.allPlayersAtSameBlock(movablePlayers):
                                 player = movablePlayers[0]
@@ -46,8 +54,11 @@ if __name__ == "__main__":
                                 
                                 if player.reachedHome():
                                     if player.allPlayersReachedHome():
-                                        Dice.setToNextTurn()
-                                        Dice.removeFromSequence(player.type)
+                                        Dice.removeFromSequence(game,player.type)
+                                        if game.wantToPlayAgain():
+                                            return RESTARTGAME
+                                        else:
+                                            return EXITGAME
                                     else:
                                         Dice.availableTurns += 1
 
@@ -57,8 +68,14 @@ if __name__ == "__main__":
                                 Player.popAllMovablePlayers(movablePlayers,game)
 
         if Dice.availableTurns==0:
-            Dice.setToNextTurn()
+            Dice.setToNextTurn(game)
                 
         game.blitObjects()
-        
+
+    return EXITGAME
+
+if __name__ == "__main__":
+    game = main()
+    while not game==EXITGAME:
+        game = main()
     pygame.quit()

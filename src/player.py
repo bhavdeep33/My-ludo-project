@@ -7,6 +7,12 @@ import time
 class Player:
     PLAYERS = []
 
+    @classmethod
+    def resetClass(cls):
+        for player in cls.PLAYERS:
+            del player
+        cls.PLAYERS.clear()
+
     def __init__(self,type,rect_x,rect_y,img):
         self.__type = type
         self.__initialImgRect = pygame.Rect(rect_x,rect_y,Dimensions.BLOCKSIZE,Dimensions.BLOCKSIZE)

@@ -3,6 +3,12 @@ from defines import *
 class Block:
     BLOCKS = []
 
+    @classmethod
+    def resetClass(cls):
+        for block in cls.BLOCKS:
+            del block
+        cls.BLOCKS.clear()
+
     def __init__(self,type,x,y):
         self.__type = type
         self.__x = x

@@ -2,13 +2,20 @@ import pygame
 from PIL import Image
 from player import Player
 from dice import Dice
+from block import Block
 from defines import *
+from tkinter import messagebox
 
 class Game:
     SCREEN = None
     FPSCLOCK = None
     exitGame = False
     GAME_START_SOUND = None
+    sequence  = deque([RED,GREEN,YELLOW,BLUE])
+
+    @classmethod
+    def resetClass(cls):
+        cls.sequence  = deque([RED,GREEN,YELLOW,BLUE])
 
     def __init__(self):
         Dimensions.defineBlockDimensions()
@@ -18,6 +25,14 @@ class Game:
         self.initDice()
         Game.GAME_START_SOUND.play()
 
+    @staticmethod
+    def restartGame():
+        pygame.quit()
+        Game.resetClass()
+        Block.resetClass()
+        Dice.resetClass()
+        Player.resetClass()
+        
     def initGameWindow(self):
         pygame.init()
         self.SCREEN = pygame.display.set_mode((Dimensions.SCREENWIDTH,Dimensions.SCREENHEIGHT))
@@ -78,3 +93,16 @@ class Game:
         resizedBanner = self.resizeImg('Images/Banner.png',Dimensions.BANNERWIDTH,Dimensions.BANNERHEIGHT)
         self.SCREEN.blit(resizedBanner,Dimensions.BANNER_POS[0])
         self.SCREEN.blit(resizedBanner,Dimensions.BANNER_POS[1])
+
+    def isGameOver(self):
+        if len(self.sequence)==1:
+            return True
+        return False
+    
+    def wantToPlayAgain(self):
+        choice = messagebox.askyesno("Game Over", "Game over, do you want to play again?")
+        if choice:
+            Game.restartGame()
+            return True
+        else:
+            return False

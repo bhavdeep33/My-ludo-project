@@ -10,7 +10,6 @@ GREEN = "Green"
 YELLOW = "Yellow"
 DUMMY = "Dummy"
 CAPTION = config['caption']['caption']
-sequence  = deque([RED,GREEN,YELLOW,BLUE])
 INITIAL_DICE_COUNT = 6
 
 class Directions:

@@ -13,6 +13,17 @@ class Dice:
     imgRect = None
     availableTurns = 1
 
+    @classmethod
+    def resetClass(cls):
+        cls.isRolled = False
+        cls.currentCount = 0
+        cls.currentTurn = RED
+        cls.sixCount = 0
+        cls.IMGLIST = [None]
+        cls.img = None
+        cls.imgRect = None
+        cls.availableTurns = 1
+        
     @staticmethod
     def blitDice(SCREEN):
         SCREEN.blit(Dice.img,Dice.imgRect)
@@ -37,11 +48,12 @@ class Dice:
             return True
 
     @staticmethod
-    def setToNextTurn():
+    def setToNextTurn(game):
         Dice.img = Dice.IMGLIST[6]
         Dice.imgRect.topleft = Dice.getDiceNextTurnDimensions()
-        sequence.rotate(-1)
-        Dice.currentTurn = sequence[0]
+        if game.sequence[0]==Dice.currentTurn:
+            game.sequence.rotate(-1)
+        Dice.currentTurn = game.sequence[0]
         Dice.isRolled = False
         Dice.availableTurns = 1
         Dice.sixCount = 0
@@ -63,7 +75,7 @@ class Dice:
             Dice.availableTurns += 1
 
     @staticmethod
-    def removeFromSequence(type):
-        sequence.remove(type)
+    def removeFromSequence(game,type):
+        game.sequence.remove(type)
         dicePosToBeRemoved = Dimensions.dicePositions[-1]
         Dimensions.dicePositions.remove(dicePosToBeRemoved)
