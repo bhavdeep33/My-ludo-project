@@ -1,13 +1,16 @@
 # My-ludo-project
 
-It is an intermediate level ludo game project which focuses on implementing core python concepts apart from building just a game. It is written in python with pygame and help of other supporting python libraries. This game contains almost all features which typical ludo game have. Dive into the world of PyLudo and experience the joy of rolling the dice, moving your tokens, and competing against friends!
+This is a ludo game project created in python with pygame and help of other supporting python libraries. 
+Apart from building just a game, this project also focuses on implementing core python concepts. This project contains almost all features which typical ludo game have. 
+
+So, let's Dive into the world of PyLudo and experience the joy of rolling the dice, moving your tokens, and competing against friends!
 
 ## Game features:
 
 Just like typical ludo game, this project include following features:
-- Roll dice and move players
-- Kill other players
-- Auto detect movable players according to dice count and auto move players
+- Rolling dice and moving players
+- Killing other players
+- Auto detecting movable players according to dice count and auto moving players
 - Grouping players if more than one players are in same block
 - Popping up movable players when dice is rolled
 - Displaying game over window when game is over and allowing user to replay the game if he wants to play again
