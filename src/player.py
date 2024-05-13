@@ -187,10 +187,10 @@ class Player:
                 time.sleep(0.1)
                 count -= 1
         self.currentBlock.players.append(self)
-        if(isinstance(self.currentBlock,SafeBlock)):
-            Player.HOME_SOUND.play()
         if self.reachedHome():
             Player.REACHED_HOME_SOUND.play()
+        elif(isinstance(self.currentBlock,SafeBlock)):
+            Player.HOME_SOUND.play()
 
         Player.groupPlayersAt(self.currentBlock,game)
         Dice.isRolled = False

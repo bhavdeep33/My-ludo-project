@@ -4,13 +4,10 @@ from dice import Dice
 import pygame
 from defines import *
 
-EXITGAME = False
-RESTARTGAME = True
 playerMoved = None
 
 def main():
     game = Game()
-    global playerMoved
 
     while not game.exitGame:
         for event in pygame.event.get():  # For Loop
@@ -48,6 +45,7 @@ def main():
                     Dice.removeFromSequence(game,playerMoved.type)
                     if game.isGameOver():
                         if game.wantToPlayAgain():
+                            Game.restartGame()
                             return RESTARTGAME
                         else:
                             return EXITGAME

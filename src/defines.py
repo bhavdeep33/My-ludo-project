@@ -4,6 +4,8 @@ from collections import deque
 config = configparser.ConfigParser()
 config.read('config/config.ini')
 
+EXITGAME = False
+RESTARTGAME = True
 RED = "Red"
 BLUE = "Blue"
 GREEN = "Green"

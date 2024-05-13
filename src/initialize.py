@@ -102,7 +102,6 @@ class Game:
     def wantToPlayAgain(self):
         choice = messagebox.askyesno("Game Over", "Game over, do you want to play again?")
         if choice:
-            Game.restartGame()
             return True
         else:
             return False
