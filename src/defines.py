@@ -1,5 +1,8 @@
 import configparser
 from collections import deque
+import os 
+
+os.chdir("D:/Desktop/My work/prj")
 
 config = configparser.ConfigParser()
 config.read('config/config.ini')

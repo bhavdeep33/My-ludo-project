@@ -8,6 +8,7 @@ playerMoved = None
 
 def main():
     game = Game()
+    global playerMoved
 
     while not game.exitGame:
         for event in pygame.event.get():  # For Loop
