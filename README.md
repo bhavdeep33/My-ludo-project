@@ -5,6 +5,36 @@ Apart from building just a game, this project also focuses on implementing core 
 
 So, let's Dive into the world of PyLudo and experience the joy of rolling the dice, moving your tokens, and competing against friends!
 
+## Prerequisites:
+
+1. Python
+2. Python libraries:
+    - pygame
+    - PIL
+    - tkinter
+
+ ## Getting started:
+
+Download binary file from bin folder and run the exe to start the game
+
+ ## or
+ 
+Run below command to clone the repository:
+
+```bash
+git clone https://github.com/bhavdeep33/My-ludo-project.git
+```
+Go to project directory:
+
+```bash
+cd My-ludo-project
+```
+
+Start the game:
+```bash
+python scr/app.py
+```
+
 ## Game features:
 
 Just like typical ludo game, this project include following features:
@@ -18,7 +48,7 @@ Just like typical ludo game, this project include following features:
 
 ## Python concepts covered:
 
-Apart from gaming it covers almost all core python concepts which is helpful in understanding the practical implementation of each concepts. Below are the major concepts which are covered in this project:
+Apart from gaming it covers almost all core python concepts which is helpful for understanding the practical implementation of each concepts. Below are the major concepts which are covered in this project:
  - Project structure
  - Basic concepts like control statements, loops,functions and lists etc.
  - Reading files and working with ini files
@@ -53,7 +83,7 @@ Apart from gaming it covers almost all core python concepts which is helpful in 
 
     **defines.py**
     
-    - Our ludo game has various components which needs to be defined or calculate manually and cannot be programmed. For example, size of each block, size of player etc will have to be defined manually and  Safe block positions,Home block positions, Initial player positions, moving directions, Each block positions, etc will have to be calculated manually. This file contains all of this defining and calculative stuff to directly use these variables in other files avoid complexity in other files.
+    - Our ludo game has various components which needs to be defined or calculated manually and cannot be programmed. For example, size of each block, size of player etc will have to be defined manually and  Safe block positions,Home block positions, Initial player positions, moving directions, Each block positions, etc will have to be calculated manually. This file contains all of this defining and calculative stuff to directly use these variables in other files and avoid complexity in other files.
     
     **app.py**
     
