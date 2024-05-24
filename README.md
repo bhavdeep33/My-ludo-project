@@ -28,15 +28,15 @@ cd My-ludo-project
 
 Start the game:
 
-Without python:
-```bash
-python bin/app.exe
-```
+> Without python:
+> ```bash
+> python bin/app.exe
+> ```
 
-With python:
-```bash
-python scr/app.py
-```
+> With python:
+> ```bash
+> python scr/app.py
+> ```
 
 ## Game features:
 
