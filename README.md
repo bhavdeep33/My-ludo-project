@@ -30,7 +30,7 @@ Start the game:
 
 > Without python:
 > ```bash
-> python bin/app.exe
+> bin/app.exe
 > ```
 
 > With python:
