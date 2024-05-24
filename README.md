@@ -15,10 +15,6 @@ So, let's Dive into the world of PyLudo and experience the joy of rolling the di
 
  ## Getting started:
 
-Download binary file from bin folder and run the exe to start the game
-
- ## or
- 
 Run below command to clone the repository:
 
 ```bash
@@ -66,7 +62,7 @@ Apart from gaming it covers almost all core python concepts which is helpful for
 ## Project overview:
 
 ### 1. /Bin:
-- This folder contains the final exe file for our project which allow us to run our game on any system without python installed.
+- This folder contains the final exe file for our project.
 
 ### 2. /Config:
 - This folder contains the configuration file for our project. We are free to configure screen dimentions and game caption by modifying this file.
